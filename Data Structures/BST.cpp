@@ -27,11 +27,11 @@ public:
 
 	bool find(int);
 	void insert(int);
-	void deleteNode(int);
+	int deleteNode(int);
 	void traverseBST(int);
 
 private:
-	Node * findNode(int);
+	Node* findNode(int);
 	Node* findParent(int);
 	Node* findLeftNode(Node*);
 	void preorder(Node*);
@@ -163,8 +163,9 @@ void BST::reverseorder(Node* curr) {
 	reverseorder(curr->left);
 }
 
-void BST::deleteNode(int val) {
+int BST::deleteNode(int val) {
 
+	int key;
 	Node* p = findNode(val);
 	if (p == 0) {
 		errorFlag = true;
@@ -181,6 +182,7 @@ void BST::deleteNode(int val) {
 			}
 			else
 				rootNode = 0;
+			key = p->data;
 			delete(p);
 			errorFlag = false;
 		}
@@ -196,6 +198,7 @@ void BST::deleteNode(int val) {
 			else {
 				rootNode = rootNode->right;
 			}
+			key = p->data;
 			delete p;
 			errorFlag = false;
 		}
@@ -211,6 +214,7 @@ void BST::deleteNode(int val) {
 			else {
 				rootNode = rootNode->left;
 			}
+			key = p->data;
 			delete p;
 			errorFlag = false;
 		}
@@ -220,17 +224,12 @@ void BST::deleteNode(int val) {
 			 */
 
 			Node* lefty = findLeftNode(p->right);
-			Node* parent = findParent(lefty->data);
-			p->data = lefty->data; // swapping data with lefty
-			if (p != parent) {
-				parent->left = lefty->right;
-			}
-			//else // to-do
-				/*parent->right = lefty->right;*/
-
+			key = deleteNode(lefty->data);
+			p->data = key; // swapping data with lefty
 		}
 
 	}
+	return key;
 }
 
 Node* BST::findLeftNode(Node* p) {

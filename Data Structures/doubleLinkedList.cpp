@@ -66,23 +66,24 @@ public:
 		if (index == 0) {
 
 			Node* temp = head;
-			temp->SetNext(head);
-			delete temp;
+			head = head->GetNext();
 
 			if (head) head->SetPRevious(NULL);
+
+			delete temp;
 
 		}
 		else {
 			int currentindex = 0;
 			Node* currentnode = head;
 			Node* previousnode = NULL;
-
+			
 			while (currentindex < index && currentnode->GetNext() != NULL) {
 				previousnode = currentnode;
 				currentnode = currentnode->GetNext();
 				currentindex++;
 			}
-
+			
 			if (currentnode->GetNext() == NULL) { // Delete from last
 				previousnode->SetNext(NULL);
 				tail = previousnode; // Don't forget to update the tail pointer
@@ -90,10 +91,10 @@ public:
 				delete currentnode;
 			}
 			else {
-
+				
 				previousnode->SetNext(currentnode->GetNext());
 				currentnode->GetNext()->SetPRevious(previousnode);
-
+				
 				delete currentnode;
 			}
 		}
@@ -103,7 +104,7 @@ public:
 	void DisplayList() {
 		if (head != 0) { // the list is not empty
 			for (int i = 0; i < size; i++) {
-				cout << GetValue(i) << " ";
+				cout << GetValue(i) << " "; 
 			}
 			cout << endl;
 		}

@@ -73,10 +73,11 @@ public:
 		if (index == 0) {
 
 			Node* temp = head;
-			temp->SetNext(head);
-			delete temp;
+			head = head->GetNext();
 
 			if (head) head->SetPRevious(NULL);
+
+			delete temp;
 
 		}
 		else {
